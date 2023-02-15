@@ -12,3 +12,7 @@
 4. quit
     ctrl+c in terminal
 
+5. debug
+    gdb
+    target remote | qemu-system-x86_64 -hda ./boot.bin -S -gdb stdio
+
