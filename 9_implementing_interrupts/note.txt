@@ -1,0 +1,14 @@
+[Hello World Bootloader]
+
+1. compile a.asm file
+    nasm -f bin ./boot.asm -o ./boot.bin
+
+2. disassembling boot.bin
+    ndisasm ./boot.bin
+
+3. run in qemu
+    qemu-system-x86_64 -hda ./boot.bin
+
+4. quit
+    ctrl+c in terminal
+
