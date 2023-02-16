@@ -1,0 +1,38 @@
+[Hello World Bootloader]
+
+1. compile a.asm file
+    nasm -f bin ./boot.asm -o ./boot.bin
+
+2. disassembling boot.bin
+    ndisasm ./boot.bin
+
+3. run in qemu
+    qemu-system-x86_64 -hda ./boot.bin
+
+4. quit
+    ctrl+c in terminal
+
+5. debug
+    gdb
+    target remote | qemu-system-x86_64 -hda ./boot.bin -S -gdb stdio
+
+[从新构造项目结构]
+1. 创建bin, build, src/boot目录
+2. 把源代码boot.asm移动到src/boot
+3. Makefile中添加make clean
+
+[打开a20开关]
+    ; enable the a20
+    in al, 0x92
+    or al, 2
+    out 0x92, al
+
+[用gdb调试程序]
+target remote | qemu-system-x86_64 -hda boot.bin -S -gdb stdio
+
+[安装交叉编译环境]
+https://wiki.osdev.org/GCC_Cross-Compiler
+依次运行网页中的以下模块中的代码
+Preparation
+Binutils
+GCC
