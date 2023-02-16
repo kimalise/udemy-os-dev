@@ -36,3 +36,14 @@ https://wiki.osdev.org/GCC_Cross-Compiler
 Preparation
 Binutils
 GCC
+
+[重构项目]
+1. 创建了build.sh
+2. 重构Makefile，把32位汇编代码独立到单独文件,编译时再链接
+
+[调试kernel.asm]
+cd bin
+gdb
+add-symbol-file ../build/kernelfull.o 0x100000
+break _start
+target remote | qemu-system-x86_64 -S -gdb stdio -hda ./os.bin
