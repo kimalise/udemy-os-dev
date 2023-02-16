@@ -1,0 +1,22 @@
+[Hello World Bootloader]
+
+1. compile a.asm file
+    nasm -f bin ./boot.asm -o ./boot.bin
+
+2. disassembling boot.bin
+    ndisasm ./boot.bin
+
+3. run in qemu
+    qemu-system-x86_64 -hda ./boot.bin
+
+4. quit
+    ctrl+c in terminal
+
+5. debug
+    gdb
+    target remote | qemu-system-x86_64 -hda ./boot.bin -S -gdb stdio
+
+[从新构造项目结构]
+1. 创建bin, build, src/boot目录
+2. 把源代码boot.asm移动到src/boot
+3. Makefile中添加make clean
