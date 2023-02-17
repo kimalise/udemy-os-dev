@@ -20,3 +20,5 @@ _start:
     out 0x92, al
 
     jmp $
+
+times 512 - ($ - $$) db 0 ; $means current line's address, while $$ means the first line 
