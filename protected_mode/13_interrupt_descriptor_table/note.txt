@@ -1,0 +1,57 @@
+[Hello World Bootloader]
+
+1. compile a.asm file
+    nasm -f bin ./boot.asm -o ./boot.bin
+
+2. disassembling boot.bin
+    ndisasm ./boot.bin
+
+3. run in qemu
+    qemu-system-x86_64 -hda ./boot.bin
+
+4. quit
+    ctrl+c in terminal
+
+5. debug
+    gdb
+    target remote | qemu-system-x86_64 -hda ./boot.bin -S -gdb stdio
+
+[从新构造项目结构]
+1. 创建bin, build, src/boot目录
+2. 把源代码boot.asm移动到src/boot
+3. Makefile中添加make clean
+
+[打开a20开关]
+    ; enable the a20
+    in al, 0x92
+    or al, 2
+    out 0x92, al
+
+[用gdb调试程序]
+target remote | qemu-system-x86_64 -hda boot.bin -S -gdb stdio
+
+[安装交叉编译环境]
+https://wiki.osdev.org/GCC_Cross-Compiler
+依次运行网页中的以下模块中的代码
+Preparation
+Binutils
+GCC
+
+[重构项目]
+1. 创建了build.sh
+2. 重构Makefile，把32位汇编代码独立到单独文件,编译时再链接
+
+[调试kernel.asm]
+cd bin
+gdb
+add-symbol-file ../build/kernelfull.o 0x100000
+break _start
+target remote | qemu-system-x86_64 -S -gdb stdio -hda ./os.bin
+
+[c程序打印字符串到终端]
+关键: 在显卡缓冲区 0xB8000位置写入数据
+例如:
+    [0xB8000] <- 'A'
+    [0xB8001] <- 15 // 字符后面的字节是字符颜色, 0为黑色, 15为白色, 以此类推 1-14为其他彩色
+实现了print(const char* str)函数, 用于打印一个字符串到终端
+终端屏幕默认是80x20的(20行，每行80个字符)
