@@ -9,6 +9,6 @@ load_idt:
     mov ebx, [ebp + 8]
 
     lidt [ebx]
-    
+
     pop ebp
     ret

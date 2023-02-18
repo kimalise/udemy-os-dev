@@ -62,7 +62,9 @@ size_t strlen(const char* str)
 
 void print(const char* str)
 {
-    for (size_t i = 0; i < strlen(str); i++)
+    // for (size_t i = 0; i < strlen(str); i++) // 这句会导致打印很多行同样的字符串,目前不知原因
+    size_t len = strlen(str);
+    for (size_t i = 0; i < len; i++)
     {
         terminal_writechar(str[i], 15);
     }

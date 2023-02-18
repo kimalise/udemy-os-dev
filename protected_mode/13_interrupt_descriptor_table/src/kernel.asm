@@ -22,12 +22,11 @@ _start:
     out 0x92, al
 
     call kernel_main
+
     jmp $
 
 problem:
-    ; int 0
     mov eax, 0
     div eax
-    ; iret
 
 times 512 - ($ - $$) db 0 ; $means current line's address, while $$ means the first line 

@@ -16,7 +16,7 @@ void zero_handler()
 
 void initialize_idt()
 {
-    memset(&idt_desc_table, 0, sizeof(idt_desc_table));
+    memset(idt_desc_table, 0, sizeof(idt_desc_table));
 
     idtr.limit= sizeof(idt_desc_table) - 1;
     idtr.offset = (uint32_t) idt_desc_table;
@@ -29,12 +29,12 @@ void initialize_idt()
 void set_idt_entry(int entry_number, void* handler_addr)
 {
     struct idt_descriptor_t* p = &idt_desc_table[entry_number];
-    uint32_t addr = (uint32_t) handler_addr;
-    p->offset_1 = addr & 0x0000ffff; // lower 16bits
+    // uint32_t addr = (uint32_t) handler_addr;
+    p->offset_1 = (uint32_t) handler_addr & 0x0000ffff; // lower 16bits
     p->selector = KimOS_CODE_SEGMENT;
     p->zero = 0x00;
-    p->type_attributes = 0xee;
-    p->offset_2 = addr >> 16; // higher 16bits
+    p->type_attributes = 0xEE;
+    p->offset_2 = (uint32_t) handler_addr >> 16; // higher 16bits
 
     return;
 }
