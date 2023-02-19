@@ -1,0 +1,16 @@
+#ifndef CONFIG_H
+#define CONFIG_H
+
+#define KimOS_CODE_SEGMENT 0x08
+#define KimOS_DATA_SEGMENT 0x10
+#define KimOS_MAX_IDT_SIZE 512
+
+// 100MB heap size
+// #define KimOS_HEAP_SIZE_BYTES 104857600
+#define KimOS_HEAP_SIZE_BYTES 4096 // for test
+
+#define KimOS_HEAP_BLOCK_SIZE 4096
+#define KimOS_HEAP_ADDRESS 0x01000000
+#define KimOS_HEAP_TABLE_ADDRESS 0x00007E00
+
+#endif
