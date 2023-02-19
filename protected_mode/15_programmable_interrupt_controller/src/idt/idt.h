@@ -21,5 +21,8 @@ struct idtr_t
 
 void initialize_idt();
 void set_idt_entry(int entry_number, void* handler_addr);
+void int21h_handler();
+void enable_interrupt();
+void disable_interrupt();
 
 #endif

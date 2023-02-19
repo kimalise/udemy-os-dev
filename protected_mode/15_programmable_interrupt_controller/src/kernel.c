@@ -100,9 +100,11 @@ void kernel_main()
     print("Hello World\nThis is a KimOS kernel!");
 
     initialize_idt();
+    //enable the system interrupts
+    enable_interrupt();
 
     // problem();
 
-    outb(0x60, 0xff);
+    // outb(0x60, 0xff);
 }
 

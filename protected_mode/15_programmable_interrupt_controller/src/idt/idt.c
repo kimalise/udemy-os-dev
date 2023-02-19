@@ -2,12 +2,26 @@
 #include "config.h"
 #include "memory/memory.h"
 #include "kernel.h"
+#include "io/io.h"
 
 struct idt_descriptor_t idt_desc_table[KimOS_MAX_IDT_SIZE];
 
 struct idtr_t idtr;
 
 extern void load_idt(struct idtr_t* idtr);
+extern void int21h();
+extern void no_interrupt();
+
+void int21h_handler()
+{
+    print("keyboard pressed!\n");
+    outb(0x20, 0x20);
+}
+
+void no_interrupt_handler()
+{
+    outb(0x20, 0x20);
+}
 
 void zero_handler()
 {
@@ -21,7 +35,14 @@ void initialize_idt()
     idtr.limit= sizeof(idt_desc_table) - 1;
     idtr.offset = (uint32_t) idt_desc_table;
 
+    for (int i = 0; i < KimOS_MAX_IDT_SIZE; i++)
+    {
+        set_idt_entry(i, no_interrupt);
+    }
+    
     set_idt_entry(0, zero_handler);
+    // set_idt_entry(0x20, int21h);
+    set_idt_entry(0x21, int21h);
 
     load_idt(&idtr);
 }
